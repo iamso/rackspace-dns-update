@@ -42,9 +42,17 @@ function update() {
     .then(data => {
       ip = data.http.ip;
 
+      if (apiAccount && apiToken) {
+        return Promise.resolve();
+      }
+
       return request.post(identityApi, identityAuth);
     })
     .then(data => {
+
+      if (domainId) {
+        return Promise.resolve();
+      }
 
       try {
         apiAccount = data.access.token.tenant.id;
@@ -63,16 +71,18 @@ function update() {
     })
     .then(data => {
 
-      try {
-        domainId = data.domains.filter(item => {
-          return item.name === domain;
-        })[0].id;
-      }
-      catch(e) {
-        return Promise.reject(new Error('Domain doesn\'t exist'));
-      }
+      if (!recordApi) {
+        try {
+          domainId = data.domains.filter(item => {
+            return item.name === domain;
+          })[0].id;
+        }
+        catch(e) {
+          return Promise.reject(new Error('Domain doesn\'t exist'));
+        }
 
-      recordApi = `${domainApi}/${domainId}/records`;
+        recordApi = `${domainApi}/${domainId}/records`;
+      }
 
       return request.get(`${recordApi}?name=${record}&type=A`, null, dnsAuth);
     })
