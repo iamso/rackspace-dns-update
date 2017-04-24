@@ -109,10 +109,10 @@ function update() {
 
 module.exports = (time = 15 * 60 * 1000) => {
   if (domain && record && user && key) {
-    if (time) {
-      setInterval(update, time);
-    }
     update();
+    if (time) {
+      return setInterval(update, time);
+    }
   }
   else {
     console.error(new Error('Data incomplete'));
