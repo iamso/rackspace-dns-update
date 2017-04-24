@@ -4,7 +4,9 @@ If you run a node app on a host with dynamic ip or frequently change the host, y
 
 ## Usage
 
-The updater needs the following environment variables to work:
+### Using environment variables
+
+Set the following environment variables:
 
 ```bash
 RACKSPACE_USER=username
@@ -17,10 +19,11 @@ RACKSPACE_DOMAIN=domain.tld
 # the name of the domain
 
 RACKSPACE_RECORD=sub.domain.tld
-# the name of the record to update/create. this is optional, will be substituted with the domainname if not provided
+# the name of the record to update/create. this is OPTIONAL, will be substituted
+# with the domainname if not provided
 ```
 
-Use the updater as follows:
+And include the module:
 
 ```javascript
 const updateDNS = require('rackspace-dns-update');
@@ -34,6 +37,44 @@ updateDNS(5 * 60 * 1000);
 updateDNS(0);
 // this will only update the DNS record once
 ```
+
+### Using function arguments
+
+Include the module and pass the following arguments:
+
+And include the module:
+
+```javascript
+const updateDNS = require('rackspace-dns-update');
+
+updateDNS(
+  null,
+  'username',
+  'key',
+  'domain.tld',
+  'sub.domain.tld' // this is OPTIONAL
+);
+// this will update the DNS record every 15 minutes
+
+updateDNS(
+  5 * 60 * 1000,
+  'username',
+  'key',
+  'domain.tld',
+  'sub.domain.tld' // this is OPTIONAL
+);
+// this will update the DNS record every 5 minutes
+
+updateDNS(
+  0,
+  'username',
+  'key',
+  'domain.tld',
+  'sub.domain.tld' // this is OPTIONAL
+);
+// this will only update the DNS record once
+```
+
 
 ## License
 
