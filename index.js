@@ -83,7 +83,7 @@ module.exports = (
             return Promise.reject(new Error('Domain doesn\'t exist'));
           }
 
-          recordApi = `${domainApi}/${domainId}/records`;
+          recordApi = `${domainApi}${domainId}/records`;
         }
 
         return request.get(`${recordApi}?name=${record}&type=A`, null, dnsAuth);
