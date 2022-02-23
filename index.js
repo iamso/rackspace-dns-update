@@ -96,10 +96,10 @@ module.exports = (
             return Promise.resolve(data.records[0]);
           }
 
-          return request.put(`${recordApi}`, {records: [{id: recordId, data: ip, comment: new Date()}]}, dnsAuth);
+          return request.put(`${recordApi}`, {records: [{id: recordId, data: ip, comment: new Date()}], ttl: 300}, dnsAuth);
         }
         else {
-          return request.post(`${recordApi}`, {records: [{name: record, type: 'A', data: ip, comment: new Date()}]}, dnsAuth);
+          return request.post(`${recordApi}`, {records: [{name: record, type: 'A', data: ip, comment: new Date()}], ttl: 300}, dnsAuth);
         }
       })
       .then(data => {
